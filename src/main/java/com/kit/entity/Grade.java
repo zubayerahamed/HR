@@ -23,7 +23,7 @@ public class Grade implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	private Long id;
 
 	private String code;
 	private boolean status;

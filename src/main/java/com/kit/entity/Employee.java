@@ -32,7 +32,7 @@ public class Employee implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	private Long id;
 
 	private long userId;
 	@Enumerated(EnumType.STRING)
@@ -42,7 +42,7 @@ public class Employee implements Serializable {
 	private Date dob;
 	@Lob
 	private byte[] photo;
-	private long gradeId;
+	private Long gradeId;
 	@Temporal(TemporalType.DATE)
 	private Date joiningDate;
 	@Temporal(TemporalType.DATE)
@@ -57,6 +57,6 @@ public class Employee implements Serializable {
 	private String tin;
 	private boolean status;
 
-	private long departmentId;
-	private long designationId;
+	private Long departmentId;
+	private Long designationId;
 }

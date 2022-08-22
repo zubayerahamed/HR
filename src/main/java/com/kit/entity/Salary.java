@@ -26,9 +26,9 @@ public class Salary implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	private Long id;
 
-	private long userId;
+	private Long userId;
 	private String year;
 	private String month;
 	@Temporal(TemporalType.DATE)

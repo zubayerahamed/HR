@@ -27,7 +27,7 @@ public class SalaryIncrement implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	private Long id;
 
 	private BigDecimal previousSalary;
 	private BigDecimal newSalary;
