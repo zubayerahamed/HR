@@ -1,0 +1,40 @@
+server:
+  port: 8081
+  error:
+    whitelabel:
+      enabled: false
+
+spring:
+  thymeleaf:
+    cache: false
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/HR?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false&tinyInt1isBit=false
+    username: root
+    password: 
+    tomcat: 
+      max-wait: 20000
+      max-active: 50
+      max-idle: 20
+      min-idle: 15
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+  jackson:
+    serialization:
+      indent-output: true
+
+logging: 
+  level:
+    org:
+      springframework:
+        web: ERROR
+    hibernate: 
+      SQL: DEBUG
+      type: TRACE 
