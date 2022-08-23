@@ -22,7 +22,7 @@ public class Grade implements Serializable{
 	private static final long serialVersionUID = 4409270696225228334L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	private String code;

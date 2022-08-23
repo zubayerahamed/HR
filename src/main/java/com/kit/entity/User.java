@@ -22,7 +22,7 @@ public class User implements Serializable{
 	private static final long serialVersionUID = -2122661616580934825L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	private String email;

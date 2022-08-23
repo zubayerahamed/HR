@@ -1,7 +1,6 @@
 package com.kit.entity;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -16,14 +15,14 @@ import lombok.Data;
 
 /**
  * @author Zubayer Ahamed
- * @since Aug 22, 2022
+ * @since Aug 23, 2022
  */
 @Data
 @Entity
-@Table(name = "SALARY_INCREMENT")
-public class SalaryIncrement implements Serializable {
+@Table(name = "FOOD")
+public class Food implements Serializable {
 
-	private static final long serialVersionUID = -8627640801421571533L;
+	private static final long serialVersionUID = 4461678541270017602L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,11 +30,9 @@ public class SalaryIncrement implements Serializable {
 
 	private Long userId;
 
-	private BigDecimal previousSalary;
-	private BigDecimal newSalary;
-	private String startFromMonth;
-	private String startFromYear;
-	@Temporal(TemporalType.TIMESTAMP)
+	private boolean present;
+	@Temporal(TemporalType.DATE)
 	private Date date;
-	private BigDecimal deviation;
+	private String month;
+	private String year;
 }

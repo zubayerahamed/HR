@@ -1,6 +1,7 @@
 package com.kit.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -31,7 +32,7 @@ public class Employee implements Serializable {
 	private static final long serialVersionUID = -6745623177627598263L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	private long userId;
@@ -50,8 +51,12 @@ public class Employee implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date permanentDate;
 
+	private BigDecimal totalSalary;
 	@Enumerated(EnumType.STRING)
 	private PaymentType paymentType;
+	private BigDecimal bankAmount;
+	private BigDecimal cashAmount;
+	private BigDecimal checkAmount;
 	private String bankName;
 	private String bankAccount;
 	private String tin;

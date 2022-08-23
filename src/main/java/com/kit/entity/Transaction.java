@@ -26,11 +26,11 @@ public class Transaction implements Serializable {
 	private static final long serialVersionUID = -101282218516963790L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	private String name;
 	@Enumerated(EnumType.STRING)
 	private TransactionType transactionType;
-
 	private boolean status;
 }

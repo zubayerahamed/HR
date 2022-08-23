@@ -25,7 +25,7 @@ public class Salary implements Serializable {
 	private static final long serialVersionUID = -8356774197287708145L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	private Long userId;

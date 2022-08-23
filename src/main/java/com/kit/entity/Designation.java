@@ -22,7 +22,7 @@ public class Designation implements Serializable {
 	private static final long serialVersionUID = -371794892510726088L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	private String name;

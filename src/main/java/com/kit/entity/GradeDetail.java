@@ -27,13 +27,13 @@ public class GradeDetail implements Serializable{
 	private static final long serialVersionUID = 8716037466026579848L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private long gradeId;
+	private Long gradeId;
+	private Long transactionId;
+	private Long percentOfTransactionId;
 
-	private long transactionId;
-	private long percentOfTransactionId;
 	@Enumerated(EnumType.STRING)
 	private AmountType type;
 	private BigDecimal amount;

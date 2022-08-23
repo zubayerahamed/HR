@@ -6,5 +6,5 @@ package com.kit.enums;
  */
 public enum PaymentType {
 
-	BANK, CASH;
+	BANK, CASH, CHECK, PARTIAL;
 }
