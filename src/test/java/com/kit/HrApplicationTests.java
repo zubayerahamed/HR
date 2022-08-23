@@ -7,6 +7,8 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.jupiter.api.Order;
@@ -26,6 +28,7 @@ import com.kit.enums.AmountType;
 import com.kit.enums.Gender;
 import com.kit.enums.PaymentType;
 import com.kit.enums.TransactionType;
+import com.kit.repository.AttendanceRepository;
 import com.kit.repository.DepartmentRepository;
 import com.kit.repository.DesignationRepository;
 import com.kit.repository.EmployeeRepository;
@@ -33,6 +36,7 @@ import com.kit.repository.GradeDetailRepository;
 import com.kit.repository.GradeRepository;
 import com.kit.repository.TransactionRepository;
 import com.kit.repository.UserRepository;
+import com.kit.util.KitTime;
 
 @SpringBootTest
 class HrApplicationTests {
@@ -55,6 +59,8 @@ class HrApplicationTests {
 	private GradeDetailRepository gradDetailRepo;
 	@Autowired
 	private EmployeeRepository empRepo;
+	@Autowired
+	private AttendanceRepository attenRepo;
 
 	@Order(1)
 	@Test
@@ -280,11 +286,31 @@ class HrApplicationTests {
 	@Order(8)
 	@Test
 	void createAttendance() throws ParseException {
-		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = sdf.parse("2022-08-01");
+
 		Attendance a = new Attendance();
-		
-		
-		
+		a.setUserId(Long.valueOf(1));
+		a.setDeviceUserId("AAA");
+		a.setDate(date);
+
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		int month = cal.get(Calendar.MONTH);
+		int year = cal.get(Calendar.YEAR);
+		a.setMonth(String.valueOf(month + 1));
+		a.setYear(String.valueOf(year));
+		a.setIntime(new KitTime("09:30"));
+		a.setOuttime(new KitTime("18:30"));
+		a.setLate(0);
+		a.setOverTime(0);
+		a.setGovtHoliday(false);
+		a.setPersonalLeave(false);
+		a.setPersonalLeaveType(null);
+		a.setPersonalLeaveReason(null);
+
+		a = attenRepo.save(a);
+		System.out.println(a.toString());
 	}
 
 }

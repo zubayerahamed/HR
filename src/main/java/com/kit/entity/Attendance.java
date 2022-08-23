@@ -44,7 +44,7 @@ public class Attendance implements Serializable {
 	@Convert(converter = KitTimeConverter.class)
 	private KitTime intime;
 	@Convert(converter = KitTimeConverter.class)
-	private String outtime;
+	private KitTime outtime;
 	private int late;
 	private int overTime;
 	private boolean govtHoliday;
