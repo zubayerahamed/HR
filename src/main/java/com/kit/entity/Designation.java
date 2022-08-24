@@ -16,7 +16,7 @@ import lombok.Data;
  */
 @Data
 @Entity
-@Table(name = "DEPARTMENT")
+@Table(name = "DESIGNATION")
 public class Designation implements Serializable {
 
 	private static final long serialVersionUID = -371794892510726088L;

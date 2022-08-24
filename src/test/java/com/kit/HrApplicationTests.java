@@ -37,6 +37,7 @@ import com.kit.repository.GradeRepository;
 import com.kit.repository.TransactionRepository;
 import com.kit.repository.UserRepository;
 import com.kit.util.KitTime;
+import com.kit.util.Util;
 
 @SpringBootTest
 class HrApplicationTests {
@@ -44,6 +45,10 @@ class HrApplicationTests {
 	private String username = "zubayer";
 	private String departmentName = "Software";
 	private String designation = "Senior Software Engineer";
+	private List<String> publicHolidays = new ArrayList<>();
+	SimpleDateFormat dayFormat = new SimpleDateFormat("EEE");
+	SimpleDateFormat monthFormat = new SimpleDateFormat("MMM");
+	SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
 
 	@Autowired
 	private UserRepository userRepo;
@@ -286,31 +291,52 @@ class HrApplicationTests {
 	@Order(8)
 	@Test
 	void createAttendance() throws ParseException {
+		List<Attendance> attendanceList = new ArrayList<Attendance>();
+		publicHolidays.add("FRI");
+
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = sdf.parse("2022-08-01");
 
-		Attendance a = new Attendance();
-		a.setUserId(Long.valueOf(1));
-		a.setDeviceUserId("AAA");
-		a.setDate(date);
+		Calendar selectedMonth = Calendar.getInstance();
+		selectedMonth.setTime(date);
+		int totalDaysOfMonth = selectedMonth.getActualMaximum(Calendar.DAY_OF_MONTH);
+		System.out.println(totalDaysOfMonth);
 
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(date);
-		int month = cal.get(Calendar.MONTH);
-		int year = cal.get(Calendar.YEAR);
-		a.setMonth(String.valueOf(month + 1));
-		a.setYear(String.valueOf(year));
-		a.setIntime(new KitTime("09:30"));
-		a.setOuttime(new KitTime("18:30"));
-		a.setLate(0);
-		a.setOverTime(0);
-		a.setGovtHoliday(false);
-		a.setPersonalLeave(false);
-		a.setPersonalLeaveType(null);
-		a.setPersonalLeaveReason(null);
+		for(int i = 0; i < totalDaysOfMonth; i++) {
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(date);
+			cal.add(Calendar.DAY_OF_MONTH, i);
 
-		a = attenRepo.save(a);
-		System.out.println(a.toString());
+			Attendance a = new Attendance();
+			a.setUserId(Long.valueOf(1));
+			a.setDeviceUserId("AAA");
+			a.setDate(cal.getTime());
+			a.setMonth(monthFormat.format(cal.getTime()).toUpperCase());
+			a.setYear(yearFormat.format(cal.getTime()));
+
+			if(publicHolidays.contains(dayFormat.format(cal.getTime()).toUpperCase())) {
+				a.setPublicHoliday(true);
+			} else {
+				a.setPresent(true);
+				a.setIntime(new KitTime("09:30"));
+				a.setOuttime(new KitTime("18:30"));
+			}
+
+			attendanceList.add(a);
+		}
+
+		List<Attendance> results = attenRepo.saveAll(attendanceList);
+		assertEquals(attendanceList.size(), results.size(), "Something wrong");
+
+		results.stream().forEach(r -> System.out.println(r.toString()));
+	}
+
+	@Test
+	void test() throws ParseException {
+		KitTime actual = new  KitTime("09:30");
+		KitTime inTime = new  KitTime("11:05");
+		long min = new Util().getLateAttendanceInMin(actual, inTime);
+		System.out.println(min);
 	}
 
 }

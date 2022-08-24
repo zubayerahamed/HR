@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>Designation</title>
+	</head>
+	<body>
+		<a th:href="@{/}">Home</a>
+		<br/>
+		<hr/>
+		<br/>
+		<p th:if="${res ne null and res.status == false}" style="color: red;" th:text="${res.message}"></p>
+		<p th:if="${res ne null and res.status == true}" style="color: green;" th:text="${res.message}"></p>
+		<form th:object="${des}" th:action="@{/designation}" method="POST">
+			<fieldset>
+				<input type="hidden" th:field="*{id}" />
+				<label>Name</label><br/>
+				<input type="text" th:field="*{name}" /><br/>
+				<label>Active</label><br/>
+				<input type="checkbox" th:field="*{status}" /><br/>
+				<button type="submit">Submit</button>
+				<a th:href="@{/designation}">Clear</a>
+			</fieldset>
+		</form>
+		<br/>
+		<hr/>
+		<br/>
+		<table border="1">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Status</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="d : ${desList}">
+					<td><a th:href="@{/designation/} + ${d.id}" th:text="${d.name}"></a></td>
+					<td th:text="${d.status == true ? 'Active' : 'Inactive'}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</body>
+</html>

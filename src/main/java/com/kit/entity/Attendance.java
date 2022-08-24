@@ -47,6 +47,8 @@ public class Attendance implements Serializable {
 	private KitTime outtime;
 	private int late;
 	private int overTime;
+	private boolean present;
+	private boolean publicHoliday;
 	private boolean govtHoliday;
 	private boolean personalLeave;
 	@Enumerated(EnumType.STRING)
