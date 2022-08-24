@@ -15,6 +15,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.kit.enums.Gender;
 import com.kit.enums.PaymentType;
 
@@ -40,18 +42,25 @@ public class Employee implements Serializable {
 	private Long departmentId;
 	private Long designationId;
 
+	
+	private String fullName;
 	@Enumerated(EnumType.STRING)
 	private Gender gender;
 	private String mobile;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Temporal(TemporalType.DATE)
 	private Date dob;
 	@Lob
 	private byte[] photo;
 	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date joiningDate;
+	private int provisionPeriod;
 	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date resignDate;
 	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date permanentDate;
 	private BigDecimal totalSalary;
 	@Enumerated(EnumType.STRING)

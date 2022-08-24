@@ -25,7 +25,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public Employee save(Employee emp) {
 		if(emp == null) return null;
-		if(emp.getUserId() == null) return null;
 		if(emp.getGradeId() == null) return null;
 		if(emp.getDepartmentId() == null) return null;
 		if(emp.getDesignationId() == null) return null;

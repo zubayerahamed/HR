@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 	<head>
-		<title>Department</title>
+		<title>Employee</title>
 	</head>
 	<body>
 		<a th:href="@{/}">Home</a>
@@ -10,15 +10,110 @@
 		<br/>
 		<p th:if="${res ne null and res.status == false}" style="color: red;" th:text="${res.message}"></p>
 		<p th:if="${res ne null and res.status == true}" style="color: green;" th:text="${res.message}"></p>
-		<form th:object="${dep}" th:action="@{/department}" method="POST">
+		<form th:object="${emp}" th:action="@{/employee}" method="POST" th:with="df=${'yyyy-MM-dd'}">
 			<fieldset>
 				<input type="hidden" th:field="*{id}" />
-				<label>Name</label><br/>
-				<input type="text" th:field="*{name}" /><br/>
-				<label>Active</label><br/>
+				<label>Employee Name</label>
+				<input type="text" th:field="*{fullName}" /><br/>
+				<label>User</label>
+				<select th:field="*{userId}">
+					<option value="">-- Select --</option>
+					<option th:each="us : ${usList}"
+							th:value="${us.id}"
+							th:text="${us.username}">
+					</option>
+				</select><br/>
+				<label>Grade</label>
+				<select th:field="*{gradeId}">
+					<option th:each="g : ${grList}"
+							th:value="${g.id}"
+							th:text="${g.code}">
+					</option>
+				</select><br/>
+				<label>Department</label>
+				<select th:field="*{departmentId}">
+					<option th:each="g : ${depList}"
+							th:value="${g.id}"
+							th:text="${g.name}">
+					</option>
+				</select><br/>
+				<label>Designation</label>
+				<select th:field="*{designationId}">
+					<option th:each="g : ${desList}"
+							th:value="${g.id}"
+							th:text="${g.name}">
+					</option>
+				</select><br/>
+				<label>Gender</label>
+				<select th:field="*{gender}">
+					<option th:each="trnv : ${T(com.kit.enums.Gender).values()}"
+							th:value="${trnv}"
+							th:text="${trnv}">
+					</option>
+				</select><br/>
+				<label>Mobile</label>
+				<input type="text" th:field="*{mobile}" /><br/>
+				<label>Date of Birth</label>
+				<input 
+					th:value="${emp.dob == null ? #dates.format(#dates.createNow(), df) : #dates.format(emp.dob, df)}"
+					type="date" 
+					id="dob"
+					name="dob" /><br/>
+				<label>Joining Date</label>
+				<input 
+					th:value="${emp.joiningDate == null ? #dates.format(#dates.createNow(), df) : #dates.format(emp.joiningDate, df)}"
+					type="date" 
+					id="joiningDate"
+					name="joiningDate" /><br/>
+				<label>Provision Period</label>
+				<input type="number" th:field="*{provisionPeriod}" min="0"/><br/>
+				<label>Permanent Date</label>
+				<input 
+					th:value="${emp.permanentDate == null ? #dates.format(#dates.createNow(), df) : #dates.format(emp.permanentDate, df)}"
+					type="date" 
+					id="permanentDate"
+					name="permanentDate" /><br/>
+				<label>Resign Date</label>
+				<input 
+					th:value="${emp.resignDate == null ? #dates.format(#dates.createNow(), df) : #dates.format(emp.resignDate, df)}"
+					type="date" 
+					id="resignDate"
+					name="resignDate" /><br/>
+				
+				<label>Salary</label>
+				<input type="number" th:field="*{totalSalary}" min="0"/><br/>
+				
+				<label>Payment Type</label>
+				<select th:field="*{paymentType}">
+					<option th:each="trnv : ${T(com.kit.enums.PaymentType).values()}"
+							th:value="${trnv}"
+							th:text="${trnv}">
+					</option>
+				</select><br/>
+				
+				<label>Bank Amount</label>
+				<input type="number" th:field="*{bankAmount}" min="0"/><br/>
+				
+				<label>Cash Amount</label>
+				<input type="number" th:field="*{cashAmount}" min="0"/><br/>
+				
+				<label>Check Amount</label>
+				<input type="number" th:field="*{checkAmount}" min="0"/><br/>
+			
+				<label>Bank Name</label>
+				<input type="text" th:field="*{bankName}"/><br/>
+				
+				<label>Bank Account No</label>
+				<input type="text" th:field="*{bankAccount}"/><br/>
+				
+				<label>TIN No</label>
+				<input type="text" th:field="*{tin}"/><br/>
+				
+				<label>Active</label>
 				<input type="checkbox" th:field="*{status}" /><br/>
+				<br/>
 				<button type="submit">Submit</button>
-				<a th:href="@{/department}">Clear</a>
+				<a th:href="@{/employee}">Clear</a>
 			</fieldset>
 		</form>
 		<br/>
@@ -32,9 +127,9 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="d : ${depList}">
-					<td><a th:href="@{/department/} + ${d.id}" th:text="${d.name}"></a></td>
-					<td th:text="${d.status == true ? 'Active' : 'Inactive'}"></td>
+				<tr th:each="e : ${empList}">
+					<td><a th:href="@{/employee/} + ${e.id}" th:text="${e.fullName}"></a></td>
+					<td th:text="${e.status == true ? 'Active' : 'Inactive'}"></td>
 				</tr>
 			</tbody>
 		</table>

@@ -9,9 +9,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.kit.entity.Department;
 import com.kit.entity.Employee;
+import com.kit.service.DepartmentService;
+import com.kit.service.DesignationService;
 import com.kit.service.EmployeeService;
+import com.kit.service.GradeService;
+import com.kit.service.UserService;
 import com.kit.util.Response;
 
 /**
@@ -23,11 +26,19 @@ import com.kit.util.Response;
 public class EmployeeController {
 
 	@Autowired private EmployeeService empService;
+	@Autowired private UserService usService;
+	@Autowired private GradeService gradService;
+	@Autowired private DepartmentService depService;
+	@Autowired private DesignationService desService;
 
 	@GetMapping
 	public String loadEmpForm(Model model) {
-		model.addAttribute("emp", new Department());
+		model.addAttribute("emp", new Employee());
 		model.addAttribute("empList", empService.getAll());
+		model.addAttribute("usList", usService.getAll());
+		model.addAttribute("grList", gradService.getAll());
+		model.addAttribute("depList", depService.getAll());
+		model.addAttribute("desList", desService.getAll());
 		return "employee";
 	}
 
@@ -35,6 +46,10 @@ public class EmployeeController {
 	public String loadEmpForm(@PathVariable Long id, Model model) {
 		model.addAttribute("emp", empService.find(id));
 		model.addAttribute("empList", empService.getAll());
+		model.addAttribute("usList", usService.getAll());
+		model.addAttribute("grList", gradService.getAll());
+		model.addAttribute("depList", depService.getAll());
+		model.addAttribute("desList", desService.getAll());
 		return "employee";
 	}
 

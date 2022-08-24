@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 	<head>
-		<title>Transaction</title>
+		<title>User</title>
 	</head>
 	<body>
 		<a th:href="@{/}">Home</a>
@@ -10,23 +10,20 @@
 		<br/>
 		<p th:if="${res ne null and res.status == false}" style="color: red;" th:text="${res.message}"></p>
 		<p th:if="${res ne null and res.status == true}" style="color: green;" th:text="${res.message}"></p>
-		<form th:object="${trn}" th:action="@{/transaction}" method="POST">
+		<form th:object="${us}" th:action="@{/user}" method="POST">
 			<fieldset>
 				<input type="hidden" th:field="*{id}" />
-				<label>Name</label><br/>
-				<input type="text" th:field="*{name}" /><br/>
-				<label>Type</label><br/>
-				<select th:field="*{transactionType}">
-					<option th:each="trnv : ${T(com.kit.enums.TransactionType).values()}"
-							th:value="${trnv}"
-							th:text="${trnv}">
-					</option>
-				</select><br/>
-				<label>Active</label><br/>
+				<label>Name</label>
+				<input type="text" th:field="*{username}" /><br/>
+				<label>Email</label>
+				<input type="email" th:field="*{email}" /><br/>
+				<label>Password</label>
+				<input type="text" th:field="*{password}" /><br/>
+				<label>Active</label>
 				<input type="checkbox" th:field="*{status}" /><br/>
 				<br/>
 				<button type="submit">Submit</button>
-				<a th:href="@{/transaction}">Clear</a>
+				<a th:href="@{/user}">Clear</a>
 			</fieldset>
 		</form>
 		<br/>
@@ -36,14 +33,14 @@
 			<thead>
 				<tr>
 					<th>Name</th>
-					<th>Type</th>
+					<th>Email</th>
 					<th>Status</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="d : ${trnList}">
-					<td><a th:href="@{/transaction/} + ${d.id}" th:text="${d.name}"></a></td>
-					<td th:text="${d.transactionType}"></td>
+				<tr th:each="d : ${usList}">
+					<td><a th:href="@{/user/} + ${d.id}" th:text="${d.username}"></a></td>
+					<td th:text="${d.email}"></td>
 					<td th:text="${d.status == true ? 'Active' : 'Inactive'}"></td>
 				</tr>
 			</tbody>
