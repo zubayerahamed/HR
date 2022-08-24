@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>Settings</title>
+	</head>
+	<body>
+		<a th:href="@{/}">Home</a>
+		<br/>
+		<hr/>
+		<br/>
+		<p th:if="${res ne null and res.status == false}" style="color: red;" th:text="${res.message}"></p>
+		<p th:if="${res ne null and res.status == true}" style="color: green;" th:text="${res.message}"></p>
+		<form th:object="${set}" th:action="@{/settings}" method="POST">
+			<fieldset>
+				<input type="hidden" th:field="*{id}" />
+				
+				<label>Company Name</label>
+				<input type="text" th:field="*{companyName}" /><br/>
+				
+				<label>Address</label>
+				<textarea rows="" cols="" th:field="*{address}"></textarea><br/>
+				
+				<label>Phone 1</label>
+				<input type="text" th:field="*{phone1}" /><br/>
+				
+				<label>Phone 2</label>
+				<input type="text" th:field="*{phone2}" /><br/>
+				
+				<label>Mobile 1</label>
+				<input type="text" th:field="*{mobile1}" /><br/>
+				
+				<label>Mobile 2</label>
+				<input type="text" th:field="*{mobile2}" /><br/>
+				
+				<label>Mobile 3</label>
+				<input type="text" th:field="*{mobile3}" /><br/>
+				
+				<label>Office In Time</label>
+				<input type="text" th:field="*{officeInTime}" /><br/>
+				
+				<label>Office Out Time</label>
+				<input type="text" th:field="*{officeOutTime}" /><br/>
+				
+				<label>Foold Bill</label>
+				<input type="number" th:field="*{foodBill}" min="0" /><br/>
+				
+				<label>Holidays</label>
+				<input type="checkbox" th:field="*{sat}" /> Sat , 
+				<input type="checkbox" th:field="*{sun}" /> Sun , 
+				<input type="checkbox" th:field="*{mon}" /> Mon , 
+				<input type="checkbox" th:field="*{tue}" /> Tue , 
+				<input type="checkbox" th:field="*{wed}" /> Wed , 
+				<input type="checkbox" th:field="*{thu}" /> Thu , 
+				<input type="checkbox" th:field="*{fri}" /> Fri
+
+				<br/>
+				<br/>
+				<button type="submit">Submit</button>
+				<a th:href="@{/settings}">Clear</a>
+			</fieldset>
+		</form>
+		<br/>
+		<hr/>
+		<br/>
+		<table border="1">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Address</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="d : ${setList}">
+					<td><a th:href="@{/settings/} + ${d.id}" th:text="${d.companyName}"></a></td>
+					<td th:text="${d.address}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</body>
+</html>
