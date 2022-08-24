@@ -45,6 +45,7 @@ public class GradeDetailServiceImpl implements GradeDetailService{
 		return grdRepo.findAllByGradeId(gradeId);
 	}
 
+	@Transactional
 	@Override
 	public void delete(Long id) {
 		grdRepo.delete(find(id));

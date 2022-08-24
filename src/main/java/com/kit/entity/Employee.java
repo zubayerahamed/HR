@@ -35,7 +35,11 @@ public class Employee implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private long userId;
+	private Long userId;
+	private Long gradeId;
+	private Long departmentId;
+	private Long designationId;
+
 	@Enumerated(EnumType.STRING)
 	private Gender gender;
 	private String mobile;
@@ -43,14 +47,12 @@ public class Employee implements Serializable {
 	private Date dob;
 	@Lob
 	private byte[] photo;
-	private Long gradeId;
 	@Temporal(TemporalType.DATE)
 	private Date joiningDate;
 	@Temporal(TemporalType.DATE)
 	private Date resignDate;
 	@Temporal(TemporalType.DATE)
 	private Date permanentDate;
-
 	private BigDecimal totalSalary;
 	@Enumerated(EnumType.STRING)
 	private PaymentType paymentType;
@@ -62,6 +64,5 @@ public class Employee implements Serializable {
 	private String tin;
 	private boolean status;
 
-	private Long departmentId;
-	private Long designationId;
+
 }

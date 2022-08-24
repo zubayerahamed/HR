@@ -57,11 +57,11 @@ public class GradeController {
 		}
 	}
 
-	@GetMapping("/detail/{id}")
-	public String loadGradeDetailForm(@PathVariable Long id, Model model) {
-		model.addAttribute("gr", grService.find(id));
+	@GetMapping("/detail/{gradeId}")
+	public String loadGradeDetailForm(@PathVariable Long gradeId, Model model) {
+		model.addAttribute("gr", grService.find(gradeId));
 		model.addAttribute("grd", new GradeDetail());
-		List<GradeDetail> grdList = grdService.getAll(id); 
+		List<GradeDetail> grdList = grdService.getAll(gradeId); 
 		grdList.stream().forEach(g -> {
 			Transaction t = trnService.find(g.getTransactionId());
 			if(t != null) g.setTransactionName(t.getName());
@@ -71,4 +71,35 @@ public class GradeController {
 		return "grade-detail";
 	}
 
+	@GetMapping("/detail/{gradeId}/{id}")
+	public String loadGradeDetailForm(@PathVariable Long gradeId, @PathVariable Long id, Model model) {
+		model.addAttribute("gr", grService.find(gradeId));
+		model.addAttribute("grd", grdService.find(id));
+		List<GradeDetail> grdList = grdService.getAll(gradeId); 
+		grdList.stream().forEach(g -> {
+			Transaction t = trnService.find(g.getTransactionId());
+			if(t != null) g.setTransactionName(t.getName());
+		});
+		model.addAttribute("grdList", grdList);
+		model.addAttribute("trnList", trnService.getAll());
+		return "grade-detail";
+	}
+
+	@PostMapping("/detail")
+	public String saveGrd(GradeDetail grd, Model model, RedirectAttributes ra) {
+		grd = grdService.save(grd);
+		if(grd == null || grd.getId() == null) {
+			ra.addFlashAttribute("res", new Response(false, "Can't save"));
+			return "redirect:/grade/detail/" + grd.getGradeId();
+		} else {
+			ra.addFlashAttribute("res", new Response(true, "Saved"));
+			return "redirect:/grade/detail/" + grd.getGradeId() + "/" + grd.getId();
+		}
+	}
+
+	@GetMapping("/detail/delete/{gradeId}/{id}")
+	public String deleteGradeDetail(@PathVariable Long gradeId, @PathVariable Long id, Model model) {
+		grdService.delete(id);
+		return "redirect:/grade/detail/" + gradeId;
+	}
 }
