@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title th:text="${'Grade Detail of ' + gr.code}"></title>
+	</head>
+	<body>
+		<a th:href="@{/grade}">&lt;&lt; Back to Grade</a> || <a th:href="@{/}">Home</a>
+		<br/>
+		<hr/>
+		<br/>
+		<p th:if="${res ne null and res.status == false}" style="color: red;" th:text="${res.message}"></p>
+		<p th:if="${res ne null and res.status == true}" style="color: green;" th:text="${res.message}"></p>
+		<form th:object="${grd}" th:action="@{/grade/detail}" method="POST">
+			<fieldset>
+				<input type="hidden" id="gradeId" name="gradeId" th:value="${gr.id}" />
+				<input type="hidden" th:field="*{id}" />
+				<label>Transaction</label><br/>
+				<select th:field="*{transactionId}">
+					<option th:each="t : ${trnList}"
+							th:value="${t.id}"
+							th:text="${t.name}">
+					</option>
+				</select><br/>
+				<label>Amount Type</label><br/>
+				<select th:field="*{type}">
+					<option th:each="amt : ${T(com.kit.enums.AmountType).values()}"
+							th:value="${amt}"
+							th:text="${amt}">
+					</option>
+				</select><br/>
+				<label>Amount</label><br/>
+				<input type="number" th:field="*{amount}" min="0" /><br/>
+				<br/>
+				<button type="submit">Submit</button>
+				<a th:href="@{/grade/detail/} + ${gr.id}">Clear</a>
+			</fieldset>
+		</form>
+		<br/>
+		<hr/>
+		<br/>
+		<table border="1">
+			<thead>
+				<tr>
+					<th>Transaction</th>
+					<th>Amount Type</th>
+					<th>Amount</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="d : ${grdList}">
+					<td><a th:href="@{/grade/detail/} + ${d.gradeId} + '/' + ${d.id}" th:text="${d.transactionName}"></a></td>
+					<td th:text="${d.type}"></td>
+					<td th:text="${d.amount}"></td>
+					<td>
+						<a th:href="@{/grade/detail/delete/} + ${d.gradeId} + '/' + ${d.id}">Delete</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</body>
+</html>

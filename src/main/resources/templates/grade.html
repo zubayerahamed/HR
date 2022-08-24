@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>Grade</title>
+	</head>
+	<body>
+		<a th:href="@{/}">Home</a>
+		<br/>
+		<hr/>
+		<br/>
+		<p th:if="${res ne null and res.status == false}" style="color: red;" th:text="${res.message}"></p>
+		<p th:if="${res ne null and res.status == true}" style="color: green;" th:text="${res.message}"></p>
+		<form th:object="${gr}" th:action="@{/grade}" method="POST">
+			<fieldset>
+				<input type="hidden" th:field="*{id}" />
+				<label>Code</label><br/>
+				<input type="text" th:field="*{code}" /><br/>
+				<label>Active</label><br/>
+				<input type="checkbox" th:field="*{status}" /><br/>
+				<button type="submit">Submit</button>
+				<a th:href="@{/grade}">Clear</a>
+			</fieldset>
+		</form>
+		<br/>
+		<hr/>
+		<br/>
+		<table border="1">
+			<thead>
+				<tr>
+					<th>Code</th>
+					<th>Status</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="d : ${grList}">
+					<td><a th:href="@{/grade/} + ${d.id}" th:text="${d.code}"></a></td>
+					<td th:text="${d.status == true ? 'Active' : 'Inactive'}"></td>
+					<td>
+						<a th:href="@{/grade/detail/} + ${d.id}">Detail</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</body>
+</html>

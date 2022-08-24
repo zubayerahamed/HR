@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.kit.enums.AmountType;
 
@@ -37,4 +38,7 @@ public class GradeDetail implements Serializable{
 	@Enumerated(EnumType.STRING)
 	private AmountType type;
 	private BigDecimal amount;
+
+	@Transient
+	public String transactionName;
 }
