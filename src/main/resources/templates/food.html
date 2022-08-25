@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>Food Attendance</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	</head>
+	<body>
+		<a th:href="@{/}" class="basePath">Home</a>
+		<a class="submitUrl" th:href="@{/food/save}"></a>
+		<br/>
+		<hr/>
+		<form th:object="${s}" th:action="@{/food/search}" method="POST" th:with="df=${'yyyy-MM-dd'}">
+			<label>Date</label>
+			<input 
+				th:value="${s.date == null ? #dates.format(#dates.createNow(), df) : #dates.format(s.date, df)}"
+				type="date" 
+				id="date"
+				name="date" />
+			<button type="submit">Search</button>
+			<a th:href="@{/food}">Clear</a>
+		</form>
+		<hr/>
+		<br/>
+		<p th:if="${res ne null and res.status == false}" style="color: red;" th:text="${res.message}"></p>
+		<p th:if="${res ne null and res.status == true}" style="color: green;" th:text="${res.message}"></p>
+		<table id="food-attendance" border="1">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Present</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="f : ${foodList}">
+					<td th:text="${f.username}"></td>
+					<td>
+						<input class="foodchecck" type="checkbox" th:attr="data-id=${f.id},data-userid=${f.userId}" th:value="${f.present}" th:checked="${f.present}"/>
+					</td>
+				</tr>
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="2">
+						<button style="width: 100%; cursor: pointer;" class="submit-food-present">Submit</button>
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				function getBasepath(){
+					var basePath = $('a.basePath').attr('href');
+					basePath = basePath.split('/')[1];
+					var href = location.href.split('/');
+					if(basePath != ''){
+						return href[0] + '//' + href[2] + '/' + basePath;
+					}
+					return href[0] + '//' + href[2];
+				}
+
+				$('.submit-food-present').off('click').on('click', function(e){
+					e.preventDefault();
+
+					var trList = $('.foodchecck');
+					var foods = [];
+					$.each(trList, function(i, data){
+						foods.push({
+							id : $(data).data('id'),
+							userId : $(data).data('userid'),
+							present : $(data).is(':checked')
+						});
+					})
+
+					var fas = {
+						"date" : $('#date').val(),
+						"foods" : foods
+					}
+
+					var obj = {
+						"fas" : fas
+					}
+
+					$.ajax({
+						url : $('.submitUrl').attr('href'),
+						type : 'POST',
+						contentType: "application/json",
+						data: JSON.stringify(obj),
+						dataType: 'json',
+						success : function(data) {
+							console.log(getBasepath() + data)
+							setTimeout(() => {
+								window.location.replace(getBasepath() + data);
+							}, 1000);
+						}, 
+						error : function(jqXHR, status, errorThrown){
+						}
+					});
+					
+				})
+				
+				
+			})
+		</script>
+	</body>
+</html>

@@ -13,6 +13,19 @@ import org.springframework.util.StringUtils;
  */
 public class Util {
 
+	private static final SimpleDateFormat monthFormat = new SimpleDateFormat("MMM");
+	private static final SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
+
+	public static String getMonthFromDate(Date date) {
+		if(date == null) return null;
+		return monthFormat.format(date).toUpperCase();
+	}
+
+	public static String getYearFromDate(Date date) {
+		if(date == null) return null;
+		return yearFormat.format(date).toUpperCase();
+	}
+
 	public long getLateAttendanceInMin(KitTime expectedInTime, KitTime actualInTime) {
 		Calendar expected = Calendar.getInstance();
 		expected.set(Calendar.HOUR_OF_DAY, expectedInTime.getHour());

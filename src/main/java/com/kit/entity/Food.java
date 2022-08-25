@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import lombok.Data;
 
@@ -35,4 +36,7 @@ public class Food implements Serializable {
 	private Date date;
 	private String month;
 	private String year;
+
+	@Transient
+	private String username;
 }
