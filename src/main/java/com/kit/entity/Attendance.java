@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import com.kit.converter.KitTimeConverter;
 import com.kit.enums.LeaveType;
@@ -54,4 +55,7 @@ public class Attendance implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private LeaveType personalLeaveType;
 	private String personalLeaveReason;
+
+	@Transient
+	private String username;
 }
