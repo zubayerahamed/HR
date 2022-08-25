@@ -86,19 +86,18 @@
 						contentType: "application/json",
 						data: JSON.stringify(obj),
 						dataType: 'json',
-						success : function(data) {
-							console.log(getBasepath() + data)
+						success : function(d) {
+							alert(d.message);
 							setTimeout(() => {
-								window.location.replace(getBasepath() + data);
+								window.location.replace(getBasepath() + d.redirectUrl);
 							}, 1000);
 						}, 
 						error : function(jqXHR, status, errorThrown){
 						}
 					});
-					
+
 				})
-				
-				
+
 			})
 		</script>
 	</body>
