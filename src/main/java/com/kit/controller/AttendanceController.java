@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,10 +22,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kit.entity.Attendance;
 import com.kit.entity.User;
+import com.kit.enums.LeaveType;
 import com.kit.service.AttendanceService;
 import com.kit.service.UserService;
 import com.kit.util.Util;
@@ -96,6 +99,7 @@ public class AttendanceController {
 		AttendanceSheet c = new AttendanceSheet();
 		ObjectMapper obm = new ObjectMapper();
 		obm.setDateFormat(sdf);
+		obm.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 		try {
 			JsonNode rootNode = obm.readTree(json);
 			JsonNode query = rootNode.get("fas");
@@ -109,6 +113,9 @@ public class AttendanceController {
 			i.setDate(c.getDate());
 			i.setMonth(Util.getMonthFromDate(c.getDate()));
 			i.setYear(Util.getYearFromDate(c.getDate()));
+			if(StringUtils.hasText(i.getLeaveType())) {
+				i.setPersonalLeaveType(LeaveType.valueOf(i.getLeaveType()));
+			}
 
 			attendaces.add(i);
 		}

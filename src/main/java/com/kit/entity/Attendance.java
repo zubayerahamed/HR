@@ -55,7 +55,32 @@ public class Attendance implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private LeaveType personalLeaveType;
 	private String personalLeaveReason;
+	private String approved;
+	private boolean homeOffice;
 
 	@Transient
 	private String username;
+	@Transient
+	private String leaveType;
+	@Transient
+	private String selectedLeaveType;
+	@Transient
+	private String inTimeF;
+	@Transient
+	private String outTimeF;
+
+	public String getInTimeF() {
+		if(intime == null) return "";
+		return intime.getT5Time();
+	}
+	public String getOutTimeF() {
+		if(outtime == null) return "";
+		return outtime.getT5Time();
+	}
+	
+
+	public String getSelectedLeaveType() {
+		if(personalLeaveType != null) return personalLeaveType.name();
+		return "";
+	}
 }
