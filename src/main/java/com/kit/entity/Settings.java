@@ -51,6 +51,7 @@ public class Settings implements Serializable{
 	private int officeHour;
 	private BigDecimal foodBill;
 	private int allocatedLeave;
+	private int maxCarryLeaveFromPrevYear;
 
 	private boolean sat;
 	private boolean sun;

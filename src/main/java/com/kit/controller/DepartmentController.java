@@ -45,7 +45,7 @@ public class DepartmentController {
 			return "redirect:/department";
 		} else {
 			ra.addFlashAttribute("res", new Response(true, "Saved"));
-			return "redirect:/department/" + department.getId();
+			return "redirect:/department";
 		}
 	}
 }

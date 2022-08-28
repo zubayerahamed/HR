@@ -46,7 +46,7 @@ public class TransactionController {
 			return "redirect:/transaction";
 		} else {
 			ra.addFlashAttribute("res", new Response(true, "Saved"));
-			return "redirect:/transaction/" + tran.getId();
+			return "redirect:/transaction";
 		}
 	}
 }

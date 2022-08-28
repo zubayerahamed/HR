@@ -61,7 +61,7 @@ public class EmployeeController {
 			return "redirect:/employee";
 		} else {
 			ra.addFlashAttribute("res", new Response(true, "Saved"));
-			return "redirect:/employee/" + emp.getId();
+			return "redirect:/employee";
 		}
 	}
 }

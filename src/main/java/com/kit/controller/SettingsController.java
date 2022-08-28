@@ -59,7 +59,7 @@ public class SettingsController {
 			return "redirect:/settings";
 		} else {
 			ra.addFlashAttribute("res", new Response(true, "Saved"));
-			return "redirect:/settings/" + set.getId();
+			return "redirect:/settings";
 		}
 	}
 }

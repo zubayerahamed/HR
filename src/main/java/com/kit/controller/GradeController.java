@@ -53,7 +53,7 @@ public class GradeController {
 			return "redirect:/grade";
 		} else {
 			ra.addFlashAttribute("res", new Response(true, "Saved"));
-			return "redirect:/grade/" + grade.getId();
+			return "redirect:/grade";
 		}
 	}
 

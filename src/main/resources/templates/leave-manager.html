@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>Leave Manager</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		<script type="text/javascript" th:src="@{/js/leave-manager.js}"></script>
+	</head>
+	<body>
+		<a th:href="@{/}" class="basePath">Home</a>
+		<a class="submitUrl" th:href="@{/leave-manager/save}"></a>
+		<br/>
+		<hr/>
+		<form th:object="${s}" th:action="@{/leave-manager/search}" method="POST" th:with="df=${'yyyy'}">
+			<label>Date</label>
+			<input type="year" id="year" name="year"/>
+			<button type="submit">Search</button>
+			<a th:href="@{/attendance}">Clear</a>
+		</form>
+		<hr/>
+		<br/>
+		<p th:if="${res ne null and res.status == false}" style="color: red;" th:text="${res.message}"></p>
+		<p th:if="${res ne null and res.status == true}" style="color: green;" th:text="${res.message}"></p>
+		<table id="food-attendance" border="1">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Present</th>
+					<th>Home Office</th>
+					<th>In Time</th>
+					<th>Out Time</th>
+					<th>Late (min)</th>
+					<th>Over Time (min)</th>
+					<th>Public Hoiday</th>
+					<th>Govt. Holiday</th>
+					<th>Personal Leave</th>
+					<th>Persona Leave Type</th>
+					<th>Reason</th>
+					<th>Approved</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="data-rows" th:each="f : ${attendanceList}">
+					<td th:text="${f.username}"></td>
+					<td>
+						<input class="attendacechecck" type="checkbox" th:attr="data-id=${f.id},data-userid=${f.userId}" th:value="${f.present}" th:checked="${f.present}"/>
+					</td>
+					<td>
+						<input class="homeOfficeChecck" type="checkbox" th:value="${f.homeOffice}" th:checked="${f.homeOffice}"/>
+					</td>
+					<td>
+						<input type="time" id="intime" name="intime" th:value="${f.inTimeF}"/>
+					</td>
+					<td>
+						<input type="time" id="outtime" name="outtime" th:value="${f.outTimeF}"/>
+					</td>
+					<td th:text="${f.late}"></td>
+					<td th:text="${f.overTime}"></td>
+					<td>
+						<input class="publicHolidayChecck" type="checkbox" th:value="${f.publicHoliday}" th:checked="${f.publicHoliday}"/>
+					</td>
+					<td>
+						<input class="govtHolidayChecck" type="checkbox" th:value="${f.govtHoliday}" th:checked="${f.govtHoliday}"/>
+					</td>
+					<td>
+						<input class="personalLeaveChecck" type="checkbox" th:value="${f.personalLeave}" th:checked="${f.personalLeave}"/>
+					</td>
+					<td>
+						<select id="leaveType" name="leaveType">
+							<option value="">-- Select --</option>
+							<option th:each="trnv : ${T(com.kit.enums.LeaveType).values()}"
+									th:value="${trnv}"
+									th:text="${trnv}"
+									th:selected="${trnv.name() eq f.selectedLeaveType}">
+							</option>
+						</select>
+					</td>
+					<td>
+						<input type="text" name="personalLeaveReason" id="personalLeaveReason" th:value="${f.personalLeaveReason}"/>
+					</td>
+					<td>
+						<input class="approvedChecck" type="checkbox" th:value="${f.approved}" th:checked="${f.approved}"/>
+					</td>
+				</tr>
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="13">
+						<button style="width: 100%; cursor: pointer;" class="submit-present">Submit</button>
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+	</body>
+</html>

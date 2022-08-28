@@ -50,6 +50,10 @@
 				<label>Yearly Total Leave</label>
 				<input type="number" th:field="*{allocatedLeave}" min="0" /><br/>
 				
+				<label>Max Carry Leave From Previous Year</label>
+				<input type="number" th:field="*{maxCarryLeaveFromPrevYear}" min="0" /><br/>
+				
+				
 				<label>Holidays</label>
 				<input type="checkbox" th:field="*{sat}" /> Sat , 
 				<input type="checkbox" th:field="*{sun}" /> Sun , 

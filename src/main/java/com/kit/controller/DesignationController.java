@@ -45,7 +45,7 @@ public class DesignationController {
 			return "redirect:/designation";
 		} else {
 			ra.addFlashAttribute("res", new Response(true, "Saved"));
-			return "redirect:/designation/" + designation.getId();
+			return "redirect:/designation";
 		}
 	}
 }

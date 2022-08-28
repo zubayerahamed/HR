@@ -45,7 +45,7 @@ public class UserController {
 			return "redirect:/user";
 		} else {
 			ra.addFlashAttribute("res", new Response(true, "Saved"));
-			return "redirect:/user/" + user.getId();
+			return "redirect:/user";
 		}
 	}
 }
