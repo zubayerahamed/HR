@@ -26,5 +26,6 @@ public class Grade implements Serializable{
 	private Long id;
 
 	private String code;
+	private int allocatedLeave;
 	private boolean status;
 }

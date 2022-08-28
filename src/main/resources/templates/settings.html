@@ -36,13 +36,19 @@
 				<input type="text" th:field="*{mobile3}" /><br/>
 				
 				<label>Office In Time</label>
-				<input type="text" th:field="*{officeInTime}" /><br/>
+				<input type="time" id="officeInTime" name="officeInTime" th:value="${set.inTimeF}" /><br/>
 				
 				<label>Office Out Time</label>
-				<input type="text" th:field="*{officeOutTime}" /><br/>
+				<input type="time" id="officeOutTime" name="officeOutTime" th:value="${set.outTimeF}" /><br/>
 				
+				<label>Office Hour (in minute)</label>
+				<input type="number" th:field="*{officeHour}" min="0" /><br/>
+
 				<label>Foold Bill</label>
 				<input type="number" th:field="*{foodBill}" min="0" /><br/>
+				
+				<label>Yearly Total Leave</label>
+				<input type="number" th:field="*{allocatedLeave}" min="0" /><br/>
 				
 				<label>Holidays</label>
 				<input type="checkbox" th:field="*{sat}" /> Sat , 

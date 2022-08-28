@@ -37,6 +37,7 @@ public class Attendance implements Serializable {
 	private Long id;
 
 	private Long userId;
+
 	private String deviceUserId;
 	@Temporal(TemporalType.DATE)
 	private Date date;
@@ -46,8 +47,8 @@ public class Attendance implements Serializable {
 	private KitTime intime;
 	@Convert(converter = KitTimeConverter.class)
 	private KitTime outtime;
-	private int late;
-	private int overTime;
+	private long late;
+	private long overTime;
 	private boolean present;
 	private boolean publicHoliday;
 	private boolean govtHoliday;

@@ -30,7 +30,6 @@ import com.kit.entity.User;
 import com.kit.enums.LeaveType;
 import com.kit.service.AttendanceService;
 import com.kit.service.UserService;
-import com.kit.util.Util;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -111,8 +110,6 @@ public class AttendanceController {
 		List<Attendance> attendaces = new ArrayList<>();
 		for(Attendance i : c.getAttendacnes()){
 			i.setDate(c.getDate());
-			i.setMonth(Util.getMonthFromDate(c.getDate()));
-			i.setYear(Util.getYearFromDate(c.getDate()));
 			if(StringUtils.hasText(i.getLeaveType())) {
 				i.setPersonalLeaveType(LeaveType.valueOf(i.getLeaveType()));
 			}

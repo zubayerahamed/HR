@@ -13,10 +13,13 @@
 		<form th:object="${gr}" th:action="@{/grade}" method="POST">
 			<fieldset>
 				<input type="hidden" th:field="*{id}" />
-				<label>Code</label><br/>
+				<label>Code</label>
 				<input type="text" th:field="*{code}" /><br/>
-				<label>Active</label><br/>
+				<label>Allocated Leave</label>
+				<input type="number" th:field="*{allocatedLeave}" min="0" /><br/>
+				<label>Active</label>
 				<input type="checkbox" th:field="*{status}" /><br/>
+				<br/>
 				<button type="submit">Submit</button>
 				<a th:href="@{/grade}">Clear</a>
 			</fieldset>

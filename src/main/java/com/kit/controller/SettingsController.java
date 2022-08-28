@@ -1,5 +1,7 @@
 package com.kit.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,7 +28,14 @@ public class SettingsController {
 	@GetMapping
 	public String load(Model model) {
 		model.addAttribute("set", new Settings());
-		model.addAttribute("setList", sService.getAll());
+		
+		List<Settings> s = sService.getAll();
+		Settings setting = s.stream().findFirst().orElse(null);
+		if(setting != null) {
+			return "redirect:/settings/" + setting.getId();
+		}
+		
+		model.addAttribute("setList", s);
 		return "settings";
 	}
 

@@ -3,6 +3,7 @@ package com.kit.entity;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,6 +14,7 @@ import javax.persistence.Transient;
 
 import org.springframework.util.StringUtils;
 
+import com.kit.converter.KitTimeConverter;
 import com.kit.enums.Days;
 import com.kit.util.KitTime;
 
@@ -42,9 +44,13 @@ public class Settings implements Serializable{
 	private String mobile3;
 	@Lob
 	private byte[] photo;
+	@Convert(converter = KitTimeConverter.class)
 	private KitTime officeInTime;
+	@Convert(converter = KitTimeConverter.class)
 	private KitTime officeOutTime;
+	private int officeHour;
 	private BigDecimal foodBill;
+	private int allocatedLeave;
 
 	private boolean sat;
 	private boolean sun;
@@ -56,6 +62,19 @@ public class Settings implements Serializable{
 
 	@Transient
 	private String holidays;
+	@Transient
+	private String inTimeF;
+	@Transient
+	private String outTimeF;
+
+	public String getInTimeF() {
+		if(officeInTime == null) return "";
+		return officeInTime.getT5Time();
+	}
+	public String getOutTimeF() {
+		if(officeOutTime == null) return "";
+		return officeOutTime.getT5Time();
+	}
 
 	public String getHolidays() {
 		this.holidays = "";

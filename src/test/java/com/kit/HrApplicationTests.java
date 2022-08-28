@@ -334,7 +334,7 @@ class HrApplicationTests {
 	@Test
 	void test() throws ParseException {
 		KitTime actual = new  KitTime("09:30");
-		KitTime inTime = new  KitTime("11:05");
+		KitTime inTime = new  KitTime("18:30");
 		long min = new Util().getLateAttendanceInMin(actual, inTime);
 		System.out.println(min);
 	}
