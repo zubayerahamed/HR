@@ -13,4 +13,5 @@ public interface EmployeeService {
 	public Employee save(Employee emp);
 	public Employee find(Long id);
 	public List<Employee> getAll();
+	public Employee getByUserId(Long userId);
 }

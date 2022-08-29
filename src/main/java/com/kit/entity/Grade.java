@@ -1,6 +1,8 @@
 package com.kit.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,4 +30,5 @@ public class Grade implements Serializable{
 	private String code;
 	private int allocatedLeave;
 	private boolean status;
+	List<GradeDetail> gradeDetails = new ArrayList<>();
 }

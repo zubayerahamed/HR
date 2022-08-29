@@ -2,8 +2,10 @@ package com.kit.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,6 +25,18 @@ public class Util {
 
 	private static final SimpleDateFormat monthFormat = new SimpleDateFormat("MMM");
 	private static final SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
+
+	public List<Integer> lastNthYearList(int n){
+		List<Integer> years = new ArrayList<>();
+
+		for(int i = 0; i < n; i++) {
+			Calendar cal = Calendar.getInstance();
+			cal.add(Calendar.YEAR, -i);
+			years.add(cal.get(Calendar.YEAR));
+		}
+
+		return years;
+	}
 
 	public Settings getSettings() {
 		return settingService.getAll().stream().findFirst().orElse(null);

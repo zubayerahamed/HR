@@ -33,4 +33,6 @@ public class User implements Serializable{
 
 	@Transient
 	private boolean present;
+	@Transient
+	private Employee employee;
 }

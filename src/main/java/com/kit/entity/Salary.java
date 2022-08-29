@@ -1,7 +1,9 @@
 package com.kit.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import lombok.Data;
 
@@ -29,9 +32,30 @@ public class Salary implements Serializable {
 	private Long id;
 
 	private Long userId;
+
 	private String year;
 	private String month;
 	@Temporal(TemporalType.DATE)
 	private Date date;
-	
+
+	private BigDecimal totalSalary;
+	@Transient
+	private List<SalaryBreakdown> breakdown;
+	private BigDecimal payableAfterBreakDown;
+	private int totalLeaveTakenInYear;
+	private int totalWorkingDaysInMonth;
+	private int totalAttendInMonth;
+	private int leaveTakenInMonth;
+	private int totalLateInMonth;
+	private int totalUndeclearedTaskInMonth;
+	private int totalUnpaidLeaveInMonth;
+	private BigDecimal unpaidLeaveAmount;
+	private int totalFoodDaysInMonth;
+	private BigDecimal foodBillInMonth;
+	private BigDecimal netPayable;
+
+	private boolean approved;
+
+	@Transient
+	private String username;
 }

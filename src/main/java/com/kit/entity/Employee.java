@@ -14,6 +14,7 @@ import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -74,4 +75,6 @@ public class Employee implements Serializable {
 	private boolean status;
 
 
+	@Transient
+	private Grade grade;
 }

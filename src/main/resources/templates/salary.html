@@ -1,22 +1,30 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 	<head>
-		<title>Leave Manager</title>
+		<title>Salary</title>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-		<script type="text/javascript" th:src="@{/js/leave-manager.js}"></script>
+		<script type="text/javascript" th:src="@{/js/salary.js}"></script>
 	</head>
 	<body>
 		<a th:href="@{/}" class="basePath">Home</a>
-		<a class="submitUrl" th:href="@{/leave-manager/save}"></a>
+		<a class="submitUrl" th:href="@{/salary/save}"></a>
 		<br/>
 		<hr/>
-		<form th:object="${s}" th:action="@{/leave-manager/search}" method="POST" th:with="df=${'yyyy'}">
+		<form th:object="${s}" th:action="@{/salary/search}" method="POST" th:with="df=${'yyyy'}">
+			<label>Month</label>
+			<select id="month" name="month">
+				<option th:each="m : ${T(com.kit.enums.Month).values()}"
+						th:value="${m}"
+						th:text="${m}"
+						th:selected="${m.name() == s.month}">
+				</option>
+			</select>
 			<label>Year</label>
 			<select id="year" name="year">
 				<option th:each="y : ${s.years}" th:value="${y}" th:text="${y}" th:selected="${s.year == y}"></option>
 			</select>
 			<button type="submit">Search</button>
-			<a th:href="@{/leave-manager}">Clear</a>
+			<a th:href="@{/salary}">Clear</a>
 		</form>
 		<hr/>
 		<br/>
@@ -26,21 +34,31 @@
 			<thead>
 				<tr>
 					<th>Name</th>
-					<th>Total Allocated Leave</th>
-					<th>Carry From Prev Year</th>
-					<th>Already Taken</th>
-					<th>Annual</th>
-					<th>Casual</th>
-					<th>Sick</th>
-					<th>Approved</th>
-					<th>Not Approved</th>
-					
+					<th>Total Salary</th>
+					<th>Break down</th>
+					<th>Payable Salary</th>
+					<th>Total Taken Leave</th>
+					<th>Total Working Days</th>
+					<th>Total Attend</th>
+					<th>Total Leave</th>
+					<th>Total Late</th>
+					<th>Unposted Task</th>
+					<th>Unpaid Leave</th>
+					<th>Unpaid Leave Amount</th>
+					<th>Food Days</th>
+					<th>Food Amount</th>
+					<th>Net payable</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr class="data-rows" th:each="f : ${lmList}">
 					<td th:text="${f.username}"></td>
-					<td th:text="${f.totalAllocatedLeave}"></td>
+					<td th:text="${f.totalSalary}">
+						<input type="hidden" name="id" class="lmid" th:value="${f.id}"/>
+						<input type="hidden" name="userId" class="userId" th:value="${f.userId}"/>
+						
+					</td>
+					<!-- <td th:text="${f.totalAllocatedLeave}"></td>
 					<td>
 						<input type="hidden" name="id" class="lmid" th:value="${f.id}"/>
 						<input type="hidden" name="userId" class="userId" th:value="${f.userId}"/>
@@ -64,7 +82,7 @@
 					</td>
 					<td>
 						<input type="number" class="notApproved" name="notApproved" th:value="${f.notApproved}" min="0"/>
-					</td>
+					</td> -->
 				</tr>
 			</tbody>
 			<tfoot>
