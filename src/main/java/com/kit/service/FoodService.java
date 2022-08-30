@@ -16,4 +16,5 @@ public interface FoodService {
 	public List<Food> findByDate(Date date);
 	public List<Food> findByMonthAndYear(String month, String year);
 	public Food find(Long id);
+	public int totalFoodDaysInMonth(Long userId, String month, String year);
 }

@@ -15,4 +15,5 @@ import com.kit.entity.LeaveManager;
 public interface LeaveManagerRepository extends JpaRepository<LeaveManager, Long>{
 
 	List<LeaveManager> findAllByYear(String year);
+	LeaveManager findByUserIdAndYear(Long userId, String year);
 }

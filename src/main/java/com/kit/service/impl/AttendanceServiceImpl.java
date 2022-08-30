@@ -1,8 +1,10 @@
 package com.kit.service.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -24,6 +26,8 @@ import com.kit.util.Util;
  */
 @Service
 public class AttendanceServiceImpl implements AttendanceService {
+
+	SimpleDateFormat dayFormat = new SimpleDateFormat("EEE");
 
 	@Autowired
 	private AttendanceRepository attRepo;
@@ -74,5 +78,36 @@ public class AttendanceServiceImpl implements AttendanceService {
 		Optional<Attendance> o = attRepo.findById(id);
 		return o.isPresent() ? o.get() : null;
 	}
+
+	@Override
+	public int totalPresentInMonth(Long userId, String month, String year) {
+		List<Attendance> attList = attRepo.findAllByUserIdAndMonthAndYear(userId, month, year);
+		if(attList == null || attList.isEmpty()) return 0;
+		return attList.stream().filter(f -> f.isPresent()).collect(Collectors.toList()).size();
+	}
+
+	@Override
+	public int totalAbsentInMonth(Long userId, String month, String year) {
+		List<Attendance> attList = attRepo.findAllByUserIdAndMonthAndYear(userId, month, year);
+		if(attList == null || attList.isEmpty()) return 0;
+		Settings s = setService.getAll().stream().findFirst().orElse(null);
+		return attList.stream().filter(f -> !f.isPresent() && !f.isGovtHoliday() && !f.isPublicHoliday() && !s.getHolidays().equalsIgnoreCase(dayFormat.format(f.getDate()))).collect(Collectors.toList()).size();
+	}
+
+	@Override
+	public int totalLateDaysInMonth(Long userId, String month, String year) {
+		List<Attendance> attList = attRepo.findAllByUserIdAndMonthAndYear(userId, month, year);
+		if(attList == null || attList.isEmpty()) return 0;
+		return attList.stream().filter(f -> f.isPresent() && f.getLate() > 0).collect(Collectors.toList()).size();
+	}
+
+	@Override
+	public int totalUnpaidLeaveInMonth(Long userId, String month, String year) {
+		List<Attendance> attList = attRepo.findAllByUserIdAndMonthAndYear(userId, month, year);
+		if(attList == null || attList.isEmpty()) return 0;
+		return attList.stream().filter(f -> f.isPersonalLeave() && !f.isApproved()).collect(Collectors.toList()).size();
+	}
+
+	
 
 }

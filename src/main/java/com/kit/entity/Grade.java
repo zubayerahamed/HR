@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import lombok.Data;
 
@@ -30,5 +31,6 @@ public class Grade implements Serializable{
 	private String code;
 	private int allocatedLeave;
 	private boolean status;
+	@Transient
 	List<GradeDetail> gradeDetails = new ArrayList<>();
 }

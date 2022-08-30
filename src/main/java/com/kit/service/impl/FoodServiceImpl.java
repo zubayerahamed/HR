@@ -3,6 +3,7 @@ package com.kit.service.impl;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -49,4 +50,13 @@ public class FoodServiceImpl implements FoodService {
 		Optional<Food> o = foodRepo.findById(id);
 		return o.isPresent() ? o.get() : null;
 	}
+
+	@Override
+	public int totalFoodDaysInMonth(Long userId, String month, String year) {
+		List<Food> list = foodRepo.findAllByUserIdAndMonthAndYear(userId, month, year);
+		if(list == null || list.isEmpty()) return 0;
+		return list.stream().filter(f -> f.isPresent()).collect(Collectors.toList()).size();
+	}
+
+	
 }

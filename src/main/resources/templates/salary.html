@@ -48,6 +48,7 @@
 					<th>Food Days</th>
 					<th>Food Amount</th>
 					<th>Net payable</th>
+					<th>Approved</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -58,36 +59,50 @@
 						<input type="hidden" name="userId" class="userId" th:value="${f.userId}"/>
 						
 					</td>
-					<!-- <td th:text="${f.totalAllocatedLeave}"></td>
 					<td>
-						<input type="hidden" name="id" class="lmid" th:value="${f.id}"/>
-						<input type="hidden" name="userId" class="userId" th:value="${f.userId}"/>
-						<input type="hidden" name="totalAllocatedLeave" class="totalAllocatedLeave" th:value="${f.totalAllocatedLeave}"/>
-						<input type="number" class="carryFromPrevYear" name="carryFromPrevYear" th:value="${f.carryFromPrevYear}" min="0"/>
+						<div>
+							<table border="1">
+								<thead>
+									<tr>
+										<th>Grade</th>
+										<th>Name</th>
+										<th>Trn Type</th>
+										<th>Amount Type</th>
+										<th>Amount</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="b : ${f.breakdown}">
+										<td th:text="${b.gradeName}"></td>
+										<td th:text="${b.name}"></td>
+										<td th:text="${b.trnType}"></td>
+										<td th:text="${b.amountType}"></td>
+										<td th:text="${b.amount}"></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
 					</td>
+					<td th:text="${f.payableAfterBreakDown}"></td>
+					<td th:text="${f.totalLeaveTakenInYear}"></td>
+					<td th:text="${f.totalWorkingDaysInMonth}"></td>
+					<td th:text="${f.totalAttendInMonth}"></td>
+					<td th:text="${f.leaveTakenInMonth}"></td>
+					<td th:text="${f.totalLateInMonth}"></td>
+					<td th:text="${f.totalUndeclearedTaskInMonth}"></td>
+					<td th:text="${f.totalUnpaidLeaveInMonth}"></td>
+					<td th:text="${f.unpaidLeaveAmount}"></td>
+					<td th:text="${f.totalFoodDaysInMonth}"></td>
+					<td th:text="${f.foodBillInMonth}"></td>
+					<td th:text="${f.netPayable}"></td>
 					<td>
-						<input type="number" class="alreadyTaken" name="alreadyTaken" th:value="${f.alreadyTaken}" min="0"/>
+						<input class="approvedChecck" type="checkbox" th:value="${f.approved}" th:checked="${f.approved}"/>
 					</td>
-					<td>
-						<input type="number" class="annual" name="annual" th:value="${f.annual}" min="0"/>
-					</td>
-					<td>
-						<input type="number" class="casual" name="casual" th:value="${f.casual}" min="0"/>
-					</td>
-					<td>
-						<input type="number" class="sick" name="sick" th:value="${f.sick}" min="0"/>
-					</td>
-					<td>
-						<input type="number" class="approved" name="approved" th:value="${f.approved}" min="0"/>
-					</td>
-					<td>
-						<input type="number" class="notApproved" name="notApproved" th:value="${f.notApproved}" min="0"/>
-					</td> -->
 				</tr>
 			</tbody>
 			<tfoot>
 				<tr>
-					<td colspan="13">
+					<td colspan="16">
 						<button style="width: 100%; cursor: pointer;" class="submit-lm">Submit</button>
 					</td>
 				</tr>

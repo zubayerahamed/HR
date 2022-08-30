@@ -17,4 +17,5 @@ public interface FoodRepository extends JpaRepository<Food, Long> {
 
 	List<Food> findAllByDate(Date date);
 	List<Food> findAllByMonthAndYear(String month, String year);
+	List<Food> findAllByUserIdAndMonthAndYear(Long userId, String month, String year);
 }

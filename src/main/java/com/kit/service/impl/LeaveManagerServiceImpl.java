@@ -46,4 +46,10 @@ public class LeaveManagerServiceImpl implements LeaveManagerService {
 		return o.isPresent() ? o.get() : null;
 	}
 
+	@Override
+	public LeaveManager findByUserIdAndYear(Long userId, String year) {
+		return lmRepo.findByUserIdAndYear(userId, year);
+	}
+
+	
 }

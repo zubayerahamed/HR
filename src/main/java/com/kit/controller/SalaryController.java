@@ -1,6 +1,7 @@
 package com.kit.controller;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,13 +28,22 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kit.entity.Employee;
 import com.kit.entity.Grade;
 import com.kit.entity.GradeDetail;
+import com.kit.entity.LeaveManager;
 import com.kit.entity.Salary;
 import com.kit.entity.SalaryBreakdown;
+import com.kit.entity.Transaction;
 import com.kit.entity.User;
+import com.kit.enums.AmountType;
+import com.kit.enums.TransactionType;
+import com.kit.service.AttendanceService;
 import com.kit.service.EmployeeService;
+import com.kit.service.FoodService;
 import com.kit.service.GradeDetailService;
 import com.kit.service.GradeService;
+import com.kit.service.LeaveManagerService;
 import com.kit.service.SalaryService;
+import com.kit.service.SettingsService;
+import com.kit.service.TransactionService;
 import com.kit.service.UserService;
 import com.kit.util.Util;
 
@@ -63,6 +73,16 @@ public class SalaryController {
 	private GradeService gradeService;
 	@Autowired
 	private GradeDetailService gradeDetailService;
+	@Autowired
+	private TransactionService trnService;
+	@Autowired
+	private LeaveManagerService lmService;
+	@Autowired
+	private AttendanceService attService;
+	@Autowired
+	private FoodService foodService;
+	@Autowired
+	private SettingsService setService;
 
 	@GetMapping
 	public String load(Model model) {
@@ -111,21 +131,62 @@ public class SalaryController {
 				salary.setUserId(u.getId());
 				salary.setUsername(u.getUsername());
 				if(u.getEmployee() != null) {
+					// total salary
 					salary.setTotalSalary(u.getEmployee().getTotalSalary() == null ? BigDecimal.ZERO : u.getEmployee().getTotalSalary());
+
+					// breakdown
 					Grade g = u.getEmployee().getGrade();
 					if(g != null && !g.getGradeDetails().isEmpty()) {
 						List<SalaryBreakdown> sbList = new ArrayList<>();
 						for(GradeDetail gd : g.getGradeDetails()) {
 							SalaryBreakdown sb = new SalaryBreakdown();
-							sb.setName(gd.get);
-							
+							Transaction t = trnService.find(gd.getTransactionId());
+							sb.setName(t.getName());
+							sb.setTrnType(t.getTransactionType());
+							sb.setAmountType(gd.getType());
+							sb.setAmount(gd.getAmount());
+							sb.setGradeName(g.getCode());
 							sbList.add(sb);
 						}
 						salary.setBreakdown(sbList);
 					}
+
+					// payable
+					for(SalaryBreakdown sb : salary.getBreakdown()) {
+						if(sb.getTrnType().equals(TransactionType.DEDUCTION)) {
+							if(sb.getAmountType().equals(AmountType.PERCENT)) {
+								salary.setPayableAfterBreakDown(salary.getTotalSalary().subtract(salary.getTotalSalary().multiply(sb.getAmount()).divide(BigDecimal.valueOf(100))).setScale(2, RoundingMode.DOWN));
+							} else {
+								salary.setPayableAfterBreakDown(salary.getTotalSalary().subtract(salary.getTotalSalary().subtract(sb.getAmount())).setScale(2, RoundingMode.DOWN));
+							}
+						}
+					}
 				}
 				
-				
+				// total taken leave
+				LeaveManager lm = lmService.findByUserIdAndYear(salary.getUserId(), year.toString());
+				salary.setTotalLeaveTakenInYear(lm.getAlreadyTaken());
+				try {
+					salary.setTotalWorkingDaysInMonth(new Util().totalDaysOfMonth(month, year.toString()));
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+				salary.setTotalAttendInMonth(attService.totalPresentInMonth(salary.getUserId(), month, year.toString()));
+				salary.setLeaveTakenInMonth(attService.totalAbsentInMonth(salary.getUserId(), month, year.toString()));
+				salary.setTotalLateInMonth(attService.totalLateDaysInMonth(salary.getUserId(), month, year.toString()));
+				int unpaidLeave = attService.totalUnpaidLeaveInMonth(salary.getUserId(), month, year.toString());
+				salary.setTotalUnpaidLeaveInMonth(unpaidLeave);
+				if(salary.getTotalSalary() == null || salary.getTotalSalary().compareTo(BigDecimal.ZERO) == 0) {
+					salary.setUnpaidLeaveAmount(BigDecimal.ZERO);
+				} else {
+					BigDecimal a = BigDecimal.valueOf(new Double(salary.getTotalWorkingDaysInMonth())).setScale(2, RoundingMode.DOWN);
+					BigDecimal cal = salary.getTotalSalary().setScale(2, RoundingMode.DOWN).divide(a, 2, RoundingMode.DOWN).setScale(2, RoundingMode.DOWN);
+					salary.setUnpaidLeaveAmount(cal.multiply(BigDecimal.valueOf(new Double(unpaidLeave))).setScale(2, RoundingMode.DOWN));
+				}
+				salary.setTotalFoodDaysInMonth(foodService.totalFoodDaysInMonth(salary.getUserId(), month, year.toString()));
+				salary.setFoodBillInMonth(setService.getAll().get(0).getFoodBill().multiply(BigDecimal.valueOf(new Double(salary.getTotalFoodDaysInMonth()))).setScale(2, RoundingMode.DOWN));
+			
+				salary.setNetPayable(salary.getPayableAfterBreakDown().subtract(salary.getUnpaidLeaveAmount()).subtract(salary.getFoodBillInMonth()));
 			}
 			finalLeaveManagers.add(salary);
 		}

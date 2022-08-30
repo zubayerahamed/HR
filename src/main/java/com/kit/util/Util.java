@@ -7,21 +7,16 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-
-import com.kit.entity.Settings;
-import com.kit.service.SettingsService;
 
 /**
  * @author Zubayer Ahamed
  * @since Aug 24, 2022
  */
-@Component
+@Service
 public class Util {
 
-	@Autowired private SettingsService settingService;
 
 	private static final SimpleDateFormat monthFormat = new SimpleDateFormat("MMM");
 	private static final SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
@@ -36,10 +31,6 @@ public class Util {
 		}
 
 		return years;
-	}
-
-	public Settings getSettings() {
-		return settingService.getAll().stream().findFirst().orElse(null);
 	}
 
 	public static String getMonthFromDate(Date date) {
@@ -101,10 +92,14 @@ public class Util {
 	 * @throws ParseException
 	 */
 	public int totalDaysOfMonth(String month, String year) throws ParseException {
-		if(StringUtils.hasText(month) || StringUtils.hasText(year)) return 0;
+		if(!StringUtils.hasText(month) || !StringUtils.hasText(year)) return 0;
 		String month1stDate = year + "-" + month + "-" + "01"; 
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		if(month.length() > 2) {
+			sdf = new SimpleDateFormat("yyyy-MMM-dd");
+		}
+
 		Date date = sdf.parse(month1stDate);
 
 		Calendar selectedMonth = Calendar.getInstance();

@@ -13,9 +13,9 @@
 		<form th:object="${des}" th:action="@{/designation}" method="POST">
 			<fieldset>
 				<input type="hidden" th:field="*{id}" />
-				<label>Name</label><br/>
+				<label>Name</label>
 				<input type="text" th:field="*{name}" /><br/>
-				<label>Active</label><br/>
+				<label>Active</label>
 				<input type="checkbox" th:field="*{status}" /><br/>
 				<br/>
 				<button type="submit">Submit</button>

@@ -56,7 +56,7 @@ public class Attendance implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private LeaveType personalLeaveType;
 	private String personalLeaveReason;
-	private String approved;
+	private boolean approved;
 	private boolean homeOffice;
 
 	@Transient

@@ -38,10 +38,10 @@ public class Salary implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date date;
 
-	private BigDecimal totalSalary;
+	private BigDecimal totalSalary = BigDecimal.ZERO;
 	@Transient
 	private List<SalaryBreakdown> breakdown;
-	private BigDecimal payableAfterBreakDown;
+	private BigDecimal payableAfterBreakDown = BigDecimal.ZERO;
 	private int totalLeaveTakenInYear;
 	private int totalWorkingDaysInMonth;
 	private int totalAttendInMonth;
@@ -49,10 +49,10 @@ public class Salary implements Serializable {
 	private int totalLateInMonth;
 	private int totalUndeclearedTaskInMonth;
 	private int totalUnpaidLeaveInMonth;
-	private BigDecimal unpaidLeaveAmount;
+	private BigDecimal unpaidLeaveAmount = BigDecimal.ZERO;
 	private int totalFoodDaysInMonth;
-	private BigDecimal foodBillInMonth;
-	private BigDecimal netPayable;
+	private BigDecimal foodBillInMonth = BigDecimal.ZERO;
+	private BigDecimal netPayable = BigDecimal.ZERO;
 
 	private boolean approved;
 

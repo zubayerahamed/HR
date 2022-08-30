@@ -14,4 +14,5 @@ public interface LeaveManagerService {
 	public List<LeaveManager> save(List<LeaveManager> lms);
 	public List<LeaveManager> getAllByYear(String year);
 	public LeaveManager findById(Long id);
+	LeaveManager findByUserIdAndYear(Long userId, String year);
 }
