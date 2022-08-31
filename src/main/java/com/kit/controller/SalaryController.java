@@ -165,7 +165,7 @@ public class SalaryController {
 				
 				// total taken leave
 				LeaveManager lm = lmService.findByUserIdAndYear(salary.getUserId(), year.toString());
-				salary.setTotalLeaveTakenInYear(lm.getAlreadyTaken());
+				if(lm != null) salary.setTotalLeaveTakenInYear(lm.getAlreadyTaken());
 				try {
 					salary.setTotalWorkingDaysInMonth(new Util().totalDaysOfMonth(month, year.toString()));
 				} catch (ParseException e) {
