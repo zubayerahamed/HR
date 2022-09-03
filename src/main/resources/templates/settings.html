@@ -69,22 +69,6 @@
 				<a th:href="@{/settings}">Clear</a>
 			</fieldset>
 		</form>
-		<br/>
-		<hr/>
-		<br/>
-		<table border="1">
-			<thead>
-				<tr>
-					<th>Name</th>
-					<th>Address</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="d : ${setList}">
-					<td><a th:href="@{/settings/} + ${d.id}" th:text="${d.companyName}"></a></td>
-					<td th:text="${d.address}"></td>
-				</tr>
-			</tbody>
-		</table>
+		
 	</body>
 </html>
