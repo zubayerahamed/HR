@@ -9,9 +9,9 @@ spring:
     cache: false
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/HR?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false&tinyInt1isBit=false
-    username: root
-    password: 
+    url: jdbc:mysql://178.238.224.154:3306/HR?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false&tinyInt1isBit=false
+    username: sa
+    password: zubayer%123
     tomcat: 
       max-wait: 20000
       max-active: 50
