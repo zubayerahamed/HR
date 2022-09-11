@@ -20,6 +20,7 @@ $(document).ready(function(){
 				id : $(row).find('.lmid').val(),
 				userId : $(row).find('.userId').val(),
 				totalAllocatedLeave : $(row).find('.totalAllocatedLeave').val(),
+				totalUnpaidLeave : $(row).find('.totalUnpaidLeave').val(),
 				carryFromPrevYear : $(row).find('.carryFromPrevYear').val(),
 				alreadyTaken : $(row).find('.alreadyTaken').val(),
 				annual : $(row).find('.annual').val(),

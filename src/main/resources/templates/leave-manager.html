@@ -27,6 +27,7 @@
 				<tr>
 					<th>Name</th>
 					<th>Total Allocated Leave</th>
+					<th>Total Unpaid Leave</th>
 					<th>Carry From Prev Year</th>
 					<th>Already Taken</th>
 					<th>Annual</th>
@@ -41,10 +42,12 @@
 				<tr class="data-rows" th:each="f : ${lmList}">
 					<td th:text="${f.username}"></td>
 					<td th:text="${f.totalAllocatedLeave}"></td>
+					<td th:text="${f.totalUnpaidLeave}"></td>
 					<td>
 						<input type="hidden" name="id" class="lmid" th:value="${f.id}"/>
 						<input type="hidden" name="userId" class="userId" th:value="${f.userId}"/>
 						<input type="hidden" name="totalAllocatedLeave" class="totalAllocatedLeave" th:value="${f.totalAllocatedLeave}"/>
+						<input type="hidden" name="totalUnpaidLeave" class="totalUnpaidLeave" th:value="${f.totalUnpaidLeave}"/>
 						<input type="number" class="carryFromPrevYear" name="carryFromPrevYear" th:value="${f.carryFromPrevYear}" min="0"/>
 					</td>
 					<td>

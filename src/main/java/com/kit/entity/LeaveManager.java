@@ -30,6 +30,7 @@ public class LeaveManager implements Serializable {
 
 	private String year;
 	private int totalAllocatedLeave;
+	private int totalUnpaidLeave;
 	private int alreadyTaken;
 	private int annual;
 	private int casual;
